@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './App.css'
 import Navigations from './components/Navigations'
 import Register from './components/Register'
 import Login from './components/Login'
@@ -9,8 +8,9 @@ function App() {
 
   return (
     <div id='container'>
-      <Register/>
-      <Login/>
+      <Register token= {token} setToken={setToken}/>
+      <Navigations />
+      {/* <Login token= {token} setToken={setToken} /> */}
       
     </div>
   )

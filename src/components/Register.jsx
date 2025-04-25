@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom";
 
 /* TODO - add your code to create a functional React component that renders a registration form */
 function Register (){
@@ -7,8 +8,7 @@ function Register (){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [successMessage, setSuccessMessage] = useState(null)
-    console.log(successMessage)
-    console.log(password)
+   
 
     async function handleSubmit (event) {
         event.preventDefault();
@@ -19,8 +19,8 @@ function Register (){
                     method: "POST",
                     headers: {"Content-Type": "application/json"} ,
                     body: JSON.stringify({
-                        firstName: firstName,
-                        lastName: lastName,
+                        firstname: firstName,
+                        lastname: lastName,
                         email: email,
                         password: password
                     })
@@ -30,6 +30,7 @@ function Register (){
             console.log(result)
             localStorage.setItem("token", result.token)
             setSuccessMessage("User Authenticated!")
+            
 
         }catch (error){
             console.log(error)
@@ -39,10 +40,12 @@ function Register (){
     return (
         <>
         <form onSubmit={handleSubmit}>
+        
+        <br/>
             <label>
                 First Name: 
                 <input
-                name= "firstName"
+                name= "text"
                 value = {firstName}
                 onChange={(event)=> setFirstName(event.target.value)}
                 
@@ -53,7 +56,7 @@ function Register (){
             <label>
                 Last Name: 
                 <input
-                name= "lastName"
+                name= "text"
                 value = {lastName}
                 onChange={(event)=> setLastName(event.target.value)}
                 
@@ -83,6 +86,14 @@ function Register (){
             onChange={(event)=> setPassword(event.target.value)}/>
         </label>
 
+        {
+                (password && password.length <= 6) && 
+                <p><strong>Password must be longer than 6 characters.</strong></p>
+            }
+            <br/>
+        <br />
+        <button onClick={handleSubmit}>Sign Up</button>
+        
         </form>
         {
             successMessage && <p>{successMessage}</p>

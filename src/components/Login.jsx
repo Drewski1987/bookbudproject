@@ -1,6 +1,6 @@
 /* TODO - add your code to create a functional React component that renders a login form */
 
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import Register from "./Register";
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +44,7 @@ function Login (){
         return (
             <div>
                 <h1>Sign Up to Reserve Books From The Library</h1>
-                <Login />
+                
                 <br />
                 <h1>Already Registered? Sign In Here!</h1>
                 <Register />
@@ -54,6 +54,7 @@ function Login (){
 
     return(
         <div>
+            <p>Logged in as {username}</p>
             <button onClick={logOut} >Log Out</button>
         </div>
     )
