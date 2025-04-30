@@ -1,12 +1,13 @@
 import { useState } from "react"
 import { Link } from "react-router-dom";
 
-/* TODO - add your code to create a functional React component that renders a registration form */
+/* TODO - add your code to create a functional React component that renders a registration form (sign Up)*/
 function Register (){
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("")
     const [successMessage, setSuccessMessage] = useState(null)
    
 
@@ -29,16 +30,20 @@ function Register (){
             const result = await response.json()
             console.log(result)
             localStorage.setItem("token", result.token)
-            setSuccessMessage("User Authenticated!")
+            setSuccessMessage("User Created!")
             
+         
 
         }catch (error){
             console.log(error)
+            setError(error.response?.data?.message || "Please try again.");
         }
     }
 
     return (
         <>
+        <div>{error && <p>{error}</p>}</div>
+
         <form onSubmit={handleSubmit}>
         
         <br/>
@@ -92,13 +97,15 @@ function Register (){
             }
             <br/>
         <br />
-        <button onClick={handleSubmit}>Sign Up</button>
+        <button>Sign Up</button>
         
         </form>
         {
             successMessage && <p>{successMessage}</p>
         }
+        
         </>
+        
     )
 }
 

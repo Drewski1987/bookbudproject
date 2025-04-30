@@ -1,17 +1,22 @@
 /* TODO - add your code to create a functional React component that renders a login form */
 
 import { useState, useEffect } from "react"
+import {Routes, Route, Link} from "react-router-dom"
 import Register from "./Register";
 import { useNavigate } from "react-router-dom";
+import Auth from "./Auth";
+
+
 
 function Login (){
-    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState(null)
+    const [password, setPassword] = useState(null)
     const token = localStorage.getItem("token")
     const navigate = useNavigate;
 
 
     useEffect(()=>{
-        async function getUsername () {
+        async function getEmail () {
             event.preventDefault();
 
             try{
@@ -23,38 +28,42 @@ function Login (){
                     }
                 });
                 const res = (await response).json()
-                console.log(res)
-                setUsername(res.username)
+                console.log(res.email.password)
+                setEmail(res.email)
+                setPassword(res.password)
 
             }catch(error){
                 console.log(error)
             }
         }
         if (token) {
-            getUsername()
+            getEmail()
+           
         }
     }, [token])
 
     function logOut () {
         localStorage.removeItem("token")
-        navigate("/Login")
+        navigate("/users/login")
     }
 
     if (!token) {
         return (
             <div>
-                <h1>Sign Up to Reserve Books From The Library</h1>
-                
+               
                 <br />
                 <h1>Already Registered? Sign In Here!</h1>
-                <Register />
+                <Auth  />
             </div>
         )
     }
 
     return(
+
+
+
         <div>
-            <p>Logged in as {username}</p>
+            <p>You are Logged in! </p>
             <button onClick={logOut} >Log Out</button>
         </div>
     )
