@@ -12,13 +12,13 @@ const Navigations =({logout, token})=>{
 
             {token ? (
                 <>
-                <link to="/account" > Account</link>
+                <link to="/users/me" > Account</link>
                 <button onClick={logout}>Logout</button>
                 </>
             ):( 
                 <>
-                <Link to="/Login">Sign In</Link>    
-                <Link to="/register"></Link>
+                <Link to="/users/Login">Sign In</Link>    
+                <Link to="/users/register"></Link>
                 </>
             )}
                  

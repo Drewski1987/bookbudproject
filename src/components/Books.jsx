@@ -8,7 +8,9 @@ import {useEffect, useState} from "react"
 
 
 
+
 function Books ({books, setBooks}) {
+    
     const [searchTerm, setSearchTerm] = useState("")
     const [searchResults, setSearchResults] = useState([])
 
@@ -22,8 +24,8 @@ function Books ({books, setBooks}) {
            getBooks();
     },[])
 
-        const navigate = useNavigate
-        const handleClick = (book) => {
+        const navigate = useNavigate()
+        const handleDetails = (book) => {
             navigate(`/books/${book.id}`);
         };
 
@@ -77,8 +79,9 @@ function Books ({books, setBooks}) {
                 <h2>{book.title}</h2>
                 <img src={book?.coverimage} style={{height:"200px"}}/>
                 <div>
-                    <button onClick={()=> handleClick(book)}>Details</button>
-                    <Link to="/books/:id">Details</Link>
+                    <button onClick={()=> handleDetails(book)}>Details</button>
+                    <br />
+                    <Link to={`/books/${book.id}`}>Details</Link>
                 </div>
                 </div>
                 )

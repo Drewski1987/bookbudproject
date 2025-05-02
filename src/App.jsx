@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
-import Navigations from './components/Navigations'
+
 import Register from './components/Register'
 import Login from './components/Login'
 import Books from './components/Books'
 import SingleBook from './components/SingleBook'
 import Account from './components/Account'
 
+
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("token") || null)
+  const [token, setToken] = useState(null)
   const [books, setBooks] = useState([])
   const [book, setBook] = useState({})
 
@@ -27,9 +28,9 @@ function App() {
       <Link to="/">Home/Book Catalog</Link>
       <br />
       
-      <Link to="/users/register">Register</Link>
+      {!token && <Link to="/users/register">Register</Link>}
       <br />
-      <Link to="/users/login">Log In</Link>
+      {!token && <Link to="/users/login">Log In</Link>}
       <br />
       {token? <Link to="/users/me">Account</Link>: null}
 
@@ -41,11 +42,11 @@ function App() {
       
      <Routes>
       <Route path="/" element={<Books books={books} setBooks={setBooks} />} />
-      <Route path="/books/:id" element={<SingleBook  book={book} setBook={setBook} books={books} setBooks={setBooks}/> } />
+      <Route path="/books/:id" element={<SingleBook token={token} setToken={setToken} book={book} setBook={setBook} books={books} setBooks={setBooks}/> } />
       <Route path="/users/register" element={<Register token={token} setToken={setToken} />}/>
       <Route path="/users/login" element={<Login token={token} setToken={setToken} />}/>
-      <Route path='users/me' element={<Account/>} />
-      <Route path="/Navigations" element={<Navigations />}/>
+      <Route path="/users/me" element={<Account/>} />
+     
     </Routes>
       
     </div>

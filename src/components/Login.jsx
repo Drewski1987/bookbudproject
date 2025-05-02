@@ -1,72 +1,80 @@
-/* TODO - add your code to create a functional React component that renders a login form */
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-import { useState, useEffect } from "react"
-import {Routes, Route, Link} from "react-router-dom"
-import Register from "./Register";
-import { useNavigate } from "react-router-dom";
-import Auth from "./Auth";
+function Login ({token, setToken}){
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [successMessage, setSuccessMessage] = useState("")
+    const [error, setError] = useState(null)
+    const navigate = useNavigate()
 
+    async function handlelogin (event) {
+        event.preventDefault()
+        setError(null);
+    
+        navigate("/")
+        window.location.reload();
 
+        try{
+            const response = await fetch ("https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/users/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+            const result = await response.json()
+            console.log(result)
+            localStorage.setItem("token", result.token)
+            setSuccessMessage("Welcome!")
+            setEmail("");
+            setPassword("");
+            setToken(result.token)
 
-function Login (){
-    const [email, setEmail] = useState(null)
-    const [password, setPassword] = useState(null)
-    const token = localStorage.getItem("token")
-    const navigate = useNavigate;
-
-
-    useEffect(()=>{
-        async function getEmail () {
-            event.preventDefault();
-
-            try{
-                console.log("Hello")
-                const response = fetch("https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/users/login", {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                const res = (await response).json()
-                console.log(res.email.password)
-                setEmail(res.email)
-                setPassword(res.password)
-
-            }catch(error){
-                console.log(error)
-            }
+        }catch (error) {
+            console.log(error)
         }
-        if (token) {
-            getEmail()
-           
-        }
-    }, [token])
-
-    function logOut () {
-        localStorage.removeItem("token")
-        navigate("/users/login")
     }
-
-    if (!token) {
-        return (
-            <div>
-               
-                <br />
-                <h1>Already Registered? Sign In Here!</h1>
-                <Auth  />
-            </div>
-        )
-    }
+            
 
     return(
 
+        <>
+        <form onSubmit={handlelogin}>
+        <label>
+                Email 
+                <input 
+                name="email" 
+                required
+                onChange={(event)=> setEmail(event.target.value)} 
+                value = {email}
+                />
+            </label>
+            <br/>
+            <label>
+                Password 
+                <input name="password" 
+                required
+                onChange={(event) => setPassword(event.target.value)}
+                value = {password}
+                />
+            </label>
+            {
+                (password && password.length <= 6) && 
+                <p><strong>Password must be longer than 6 characters.</strong></p>
+            }
+            <br/>
+            <button onClick={handlelogin}>Log In</button>
 
-
-        <div>
-            <p>You are Logged in! </p>
-            <button onClick={logOut} >Log Out</button>
-        </div>
+           
+        </form>
+        {
+            successMessage && <p>{successMessage}</p>
+        }
+       
+        </>
     )
 }
 
-export default Login
+export default Login 
