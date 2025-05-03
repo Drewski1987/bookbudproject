@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function Login ({token, setToken}){
+function Login ({setToken}){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
@@ -12,8 +12,7 @@ function Login ({token, setToken}){
         event.preventDefault()
         setError(null);
     
-        navigate("/")
-        window.location.reload();
+       
 
         try{
             const response = await fetch ("https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/users/login", {
@@ -28,9 +27,12 @@ function Login ({token, setToken}){
             console.log(result)
             localStorage.setItem("token", result.token)
             setSuccessMessage("Welcome!")
+            setToken(result.token)
             setEmail("");
             setPassword("");
-            setToken(result.token)
+            navigate("/")
+            window.location.reload();
+            
 
         }catch (error) {
             console.log(error)

@@ -20,6 +20,15 @@ padding-left: 1rem;
 gap: var(--base-size-12, 12px);
 row-gap: 0.75rem;
 column-gap: 0.75rem;
+background-color: crimson;
+font-size: x-large;
+}
+
+a {
+  color: black;
+}
+.bookCatalog {
+  
 }
 
 /* Add your own custom styles here */

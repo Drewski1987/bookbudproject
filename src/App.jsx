@@ -33,10 +33,10 @@ function App() {
       {!token && <Link to="/users/login">Log In</Link>}
       <br />
       {token? <Link to="/users/me">Account</Link>: null}
-
+      <h>Welcome to BookBuddy portal!</h>
     </div>
-    <h1><strong>Welcome to BookBuddy portal!</strong></h1>
-    <p>You can reserve books when you register/sign in  into your account!</p>
+    
+    <p1>You can reserve books when you register/sign in  into your account!</p1>
 
     <div id='container'>
       

@@ -1,14 +1,15 @@
 import { useState } from "react"
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /* TODO - add your code to create a functional React component that renders a registration form (sign Up)*/
-function Register (){
+function Register ({setToken}){
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("")
     const [successMessage, setSuccessMessage] = useState(null)
+    const navigate = useNavigate();
    
 
     async function handleSubmit (event) {
@@ -29,9 +30,15 @@ function Register (){
             );
             const result = await response.json()
             console.log(result)
+            setToken(result.token)
+            localStorage.setItem("email", email)
+            localStorage.setItem("password", password)
             localStorage.setItem("token", result.token)
-            setSuccessMessage("User Created!")
-            
+            setSuccessMessage("Your in")
+            alert("User Created! Now please Sign-In")
+
+            navigate("/users/login")
+            window.location.reload();
          
 
         }catch (error){

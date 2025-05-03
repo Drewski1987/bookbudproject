@@ -47,8 +47,9 @@ function Books ({books, setBooks}) {
 
         return (
             <>
-            <div>
+            <div className="bookCatalog">
                 <h1><strong>Welcome BookBuddy</strong></h1>
+                <h3>Checkout all the wonder books below within the</h3>
                 <p><strong>Book Catalog</strong></p>
             <div>
                 <input 
@@ -81,7 +82,7 @@ function Books ({books, setBooks}) {
                 <div>
                     <button onClick={()=> handleDetails(book)}>Details</button>
                     <br />
-                    <Link to={`/books/${book.id}`}>Details</Link>
+                    
                 </div>
                 </div>
                 )

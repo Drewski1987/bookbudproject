@@ -7,7 +7,6 @@ import { useParams, Link, useNavigate } from "react-router-dom"
 
 function SingleBook ({token, setToken, book, setBook}) {
     const {id} = useParams()
-    // const token = localStorage.getItem("token")
     const [reserved, setReserved] = useState([])
     
   
@@ -26,12 +25,13 @@ function SingleBook ({token, setToken, book, setBook}) {
     const navigate = useNavigate
     navigate("/")
     
-    const handleReserve = async () => {
-        if (!token){
-            alert("To reserve a book please sign in!")
+    const handleReserve = async (bookId) => {
+        if (!book.available){
+            alert("This book has been checked out!");
+            return;
         }
         try{
-            const response = await fetch("https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/reservations", 
+            const res = await fetch("https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/reservations", 
                 {
                     method: "Post",
                     headers: {
@@ -39,16 +39,24 @@ function SingleBook ({token, setToken, book, setBook}) {
                         Authorization: ` Bearer ${token}`
                     },
                     body: JSON.stringify({
-                        bookId: "bookId"
+                        bookId
                     })
                 }
             )
-            const result = await response.json()
-            setReserved(result)
-            alert("Your book is reserved!") 
+            if (book.available){
+                alert ("Book successfully checked out! Enjoy!");
+                return;
+            }
+            const checkedOut = JSON.parse(localStorage.getItem("checkedOutBooks"));
+            const updated = [...checkedOut, {id: book.id, title: book.title, author: book.author}];
+            localStorage.setItem("checkedOutBooks", JSON.stringify(updated));
 
+            setBook ({...book, available: false})
+
+            
         }catch (error){
-            console.log(error)
+            console.error(error)
+            alert("Reservation is not available at this time!")
         }
         
     } 
@@ -67,28 +75,22 @@ function SingleBook ({token, setToken, book, setBook}) {
         <img src={book?.coverimage} style={{height:"200px"}}/>
         <p>Availability:{book.available? "Available" : "Checked Out"}</p>
         <br />
-
         
-        <button onClick={handleReserve}>Reserve</button>
-        <br />
-        <button onClick={() => navigate(`/books`)}>Back</button>
-        <br/>
-        <Link to="/">back to books library</Link>
-
         {token && (
                     <>
-                        <button onClick={()=>handleReserve(book.id)}>Check out or Reserve this Book</button>
+                        <button onClick={()=>handleReserve(book.id)}>Reserve this Book</button>
                     </>
                         )}
-
-                        <button onClick={()=>navigate(`/books`)}>Go Back</button>
+                         
+                        
         </div> 
         )}
 
        
-    
-                    </div>
-            )}
+        <Link to="/">back to books Catalog</Link>
+        </div>
+                    
+        )}
      
     
     
