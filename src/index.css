@@ -11,6 +11,7 @@ body {
 }
 
 .navBar{
+  justify-content: space-evenly;
 display: flex;
 padding: var(--base-size-16, var(--base-size-16));
 padding-top: 1rem;
@@ -26,9 +27,51 @@ font-size: x-large;
 
 a {
   color: black;
+
 }
-.bookCatalog {
+.bookCatalog, h1 {
+ 
+ padding-top:1px ;
+ justify-items: center;
+  background-color: crimson;
+}
+
+div#container {
+  
+  background-color: cornsilk;
+  justify-self: center;
+  padding-block: 100px;
+  padding-left: 1000px;
+  padding-right: 1000px;
+  
+  
+  
+ 
   
 }
+
+p1 {
+  display: flex;
+  background-color: black;
+  color: white;
+  justify-content: center;
+}
+
+
+form {
+  justify-self: center;
+  text-align: right;
+  height: 300px;
+  font-size: x-large;
+}
+
+.loginForm {
+  font-size: x-large;
+  padding: 30px;
+  text-align:right;
+  
+}
+
+
 
 /* Add your own custom styles here */

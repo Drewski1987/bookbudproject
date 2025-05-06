@@ -29,7 +29,7 @@ function Register ({setToken}){
                 }
             );
             const result = await response.json()
-            console.log(result)
+            
             setToken(result.token)
             localStorage.setItem("email", email)
             localStorage.setItem("password", password)
@@ -42,7 +42,7 @@ function Register ({setToken}){
          
 
         }catch (error){
-            console.log(error)
+            
             setError(error.response?.data?.message || "Please try again.");
         }
     }

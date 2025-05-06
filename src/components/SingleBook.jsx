@@ -7,7 +7,7 @@ import { useParams, Link, useNavigate } from "react-router-dom"
 
 function SingleBook ({token, setToken, book, setBook}) {
     const {id} = useParams()
-    const [reserved, setReserved] = useState([])
+   
     
   
 
@@ -15,11 +15,11 @@ function SingleBook ({token, setToken, book, setBook}) {
         const getBook = async ()=>{
             const res = await fetch(`https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books/${id}`)
             const data = await res.json()
-            console.log(res)
+            
             setBook(data)
         }
         getBook();
-        console.log(book)
+        
     },[])
 
     const navigate = useNavigate
@@ -55,7 +55,7 @@ function SingleBook ({token, setToken, book, setBook}) {
 
             
         }catch (error){
-            console.error(error)
+            
             alert("Reservation is not available at this time!")
         }
         
@@ -68,12 +68,11 @@ function SingleBook ({token, setToken, book, setBook}) {
         <div id="singleBook" key={book.id}>
 
         <h1>{book.title}</h1>
+        <p><strong>Availability:  {book.available? "Available" : "Checked Out"}</strong></p>
+        <img src={book?.coverimage} style={{height:"300px"}}/>
         <p>Author: {book.author}</p>
+        <p>{book.description}</p>
         
-        
-        <p>Description:{book.description}</p>
-        <img src={book?.coverimage} style={{height:"200px"}}/>
-        <p>Availability:{book.available? "Available" : "Checked Out"}</p>
         <br />
         
         {token && (
@@ -84,9 +83,10 @@ function SingleBook ({token, setToken, book, setBook}) {
                          
                         
         </div> 
+        
         )}
 
-       
+       <br />
         <Link to="/">back to books Catalog</Link>
         </div>
                     

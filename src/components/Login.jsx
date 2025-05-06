@@ -24,8 +24,10 @@ function Login ({setToken}){
                 })
             });
             const result = await response.json()
-            console.log(result)
+            
             localStorage.setItem("token", result.token)
+            localStorage.setItem("email", email)
+            localStorage.setItem("password", password)
             setSuccessMessage("Welcome!")
             setToken(result.token)
             setEmail("");
@@ -35,7 +37,7 @@ function Login ({setToken}){
             
 
         }catch (error) {
-            console.log(error)
+            
         }
     }
             
@@ -43,7 +45,7 @@ function Login ({setToken}){
     return(
 
         <>
-        <form onSubmit={handlelogin}>
+        <form className="loginForm" onSubmit={handlelogin}>
         <label>
                 Email 
                 <input 

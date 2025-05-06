@@ -62,23 +62,30 @@ function Books ({books, setBooks}) {
 
             </div>
             <div>
+
             <ul>
-                {searchResults.map(item => (
-            <li key={item.id}>{}
-                {Object.entries(item).map(([key, value]) => (
-            <p key={key}>{key}: {value}</p>
-            ))}
-          </li>
-         ))}
+                {searchResults.map((book) => 
+                <div key={book.id}>
+            <h2>{book.title}</h2>
+            <h4>{book.author}</h4>
+            <img src={book?.coverimage} style={{height:"300px"}}/>
+            <br />
+            <h3>{book.available? "Available" : "Checked Out"}</h3>
+            
+            <button onClick={()=> handleDetails(book)}>Details</button>
+            </div>
+            )}
+            
+         
         </ul>
             </div>
 
             </div>
-            {
+            {   books &&
                 books.map((book)=>
                 <div key= {book.id}>
                 <h2>{book.title}</h2>
-                <img src={book?.coverimage} style={{height:"200px"}}/>
+                <img src={book?.coverimage} style={{height:"300px"}}/>
                 <div>
                     <button onClick={()=> handleDetails(book)}>Details</button>
                     <br />

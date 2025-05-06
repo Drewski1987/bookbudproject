@@ -29,7 +29,7 @@ function Account (){
                 setUserInfo(data);
 
             } catch (err) {
-                console.error(err);
+                
             }
         };
         fetchUserInfo();
@@ -50,7 +50,7 @@ function Account (){
             setUserInfo(updatedUserInfo);
 
         } catch (err) {
-            console.error(err);
+            
             alert("Cannot return this book!!!");
         }
 
@@ -81,8 +81,11 @@ function Account (){
         <div key={book.id}>
             <h3>{book.title}</h3>
             <h3>{book.author}</h3>
-            <img style={{ height: "100px" }} src={book.coverimage} alt={book.title} />
+            <img style={{ height: "400px" }} src={book.coverimage} alt={book.title} />
+            <br />
             <button onClick={() => handleReturn(book.id)}>Return this Book</button>
+            <br />
+            <br />
         </div>
              )
          )
